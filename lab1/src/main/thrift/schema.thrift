@@ -34,7 +34,7 @@ union Page {
 }
 
 struct PageView {
-  1: required UserId uid;
+  1: required UserID uid;
   2: required Page page;
   3: required i32 nonce;
 }
