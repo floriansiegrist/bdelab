@@ -29,6 +29,16 @@ struct Pedigree {
   1: required i32 true_as_of_secs;
 }
 
+union Page {
+  1: string url;
+}
+
+struct PageView {
+  1: required UserId uid;
+  2: required Page page;
+  3: required i32 nonce;
+}
+
 union DataUnit {
   1: UserProperty user_property;
   2: FriendEdge friend;
@@ -40,12 +50,3 @@ struct Data {
   2: required DataUnit dataunit;
 }
 
-union Page {
-  1: String url;
-}
-
-struct PageView {
-  1: required UserId uid;
-  2: required Page page;
-  3: required i32 nonce;
-}
