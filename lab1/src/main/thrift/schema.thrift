@@ -32,9 +32,20 @@ struct Pedigree {
 union DataUnit {
   1: UserProperty user_property;
   2: FriendEdge friend;
+  3: PageView pageview;
 }
 
 struct Data {
   1: required Pedigree pedigree;
   2: required DataUnit dataunit;
+}
+
+union Page {
+1: String url
+}
+
+struct PageView {
+1: required UserId uid;
+2: required Page page;
+3: required i32 nonce;
 }
