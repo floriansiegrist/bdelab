@@ -41,11 +41,11 @@ struct Data {
 }
 
 union Page {
-1: String url
+  1: String url;
 }
 
 struct PageView {
-1: required UserId uid;
-2: required Page page;
-3: required i32 nonce;
+  1: required UserId uid;
+  2: required Page page;
+  3: required i32 nonce;
 }
