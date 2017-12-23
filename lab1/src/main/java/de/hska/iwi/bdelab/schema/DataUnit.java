@@ -37,11 +37,13 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("DataUnit");
   private static final org.apache.thrift.protocol.TField USER_PROPERTY_FIELD_DESC = new org.apache.thrift.protocol.TField("user_property", org.apache.thrift.protocol.TType.STRUCT, (short)1);
   private static final org.apache.thrift.protocol.TField FRIEND_FIELD_DESC = new org.apache.thrift.protocol.TField("friend", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+  private static final org.apache.thrift.protocol.TField PAGEVIEW_FIELD_DESC = new org.apache.thrift.protocol.TField("pageview", org.apache.thrift.protocol.TType.STRUCT, (short)3);
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     USER_PROPERTY((short)1, "user_property"),
-    FRIEND((short)2, "friend");
+    FRIEND((short)2, "friend"),
+    PAGEVIEW((short)3, "pageview");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -60,6 +62,8 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
           return USER_PROPERTY;
         case 2: // FRIEND
           return FRIEND;
+        case 3: // PAGEVIEW
+          return PAGEVIEW;
         default:
           return null;
       }
@@ -106,6 +110,8 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, UserProperty.class)));
     tmpMap.put(_Fields.FRIEND, new org.apache.thrift.meta_data.FieldMetaData("friend", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, FriendEdge.class)));
+    tmpMap.put(_Fields.PAGEVIEW, new org.apache.thrift.meta_data.FieldMetaData("pageview", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, PageView.class)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(DataUnit.class, metaDataMap);
   }
@@ -137,6 +143,12 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
     return x;
   }
 
+  public static DataUnit pageview(PageView value) {
+    DataUnit x = new DataUnit();
+    x.set_pageview(value);
+    return x;
+  }
+
 
   @Override
   protected void checkType(_Fields setField, Object value) throws ClassCastException {
@@ -151,6 +163,11 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
           break;
         }
         throw new ClassCastException("Was expecting value of type FriendEdge for field 'friend', but got " + value.getClass().getSimpleName());
+      case PAGEVIEW:
+        if (value instanceof PageView) {
+          break;
+        }
+        throw new ClassCastException("Was expecting value of type PageView for field 'pageview', but got " + value.getClass().getSimpleName());
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -181,6 +198,16 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
             return null;
           }
+        case PAGEVIEW:
+          if (field.type == PAGEVIEW_FIELD_DESC.type) {
+            PageView pageview;
+            pageview = new PageView();
+            pageview.read(iprot);
+            return pageview;
+          } else {
+            org.apache.thrift.protocol.TProtocolUtil.skip(iprot, field.type);
+            return null;
+          }
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -200,6 +227,10 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
       case FRIEND:
         FriendEdge friend = (FriendEdge)value_;
         friend.write(oprot);
+        return;
+      case PAGEVIEW:
+        PageView pageview = (PageView)value_;
+        pageview.write(oprot);
         return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
@@ -221,6 +252,11 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
           friend = new FriendEdge();
           friend.read(iprot);
           return friend;
+        case PAGEVIEW:
+          PageView pageview;
+          pageview = new PageView();
+          pageview.read(iprot);
+          return pageview;
         default:
           throw new IllegalStateException("setField wasn't null, but didn't match any of the case statements!");
       }
@@ -240,6 +276,10 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
         FriendEdge friend = (FriendEdge)value_;
         friend.write(oprot);
         return;
+      case PAGEVIEW:
+        PageView pageview = (PageView)value_;
+        pageview.write(oprot);
+        return;
       default:
         throw new IllegalStateException("Cannot write union with unknown field " + setField_);
     }
@@ -252,6 +292,8 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
         return USER_PROPERTY_FIELD_DESC;
       case FRIEND:
         return FRIEND_FIELD_DESC;
+      case PAGEVIEW:
+        return PAGEVIEW_FIELD_DESC;
       default:
         throw new IllegalArgumentException("Unknown field id " + setField);
     }
@@ -300,6 +342,20 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
     value_ = value;
   }
 
+  public PageView get_pageview() {
+    if (getSetField() == _Fields.PAGEVIEW) {
+      return (PageView)getFieldValue();
+    } else {
+      throw new RuntimeException("Cannot get field 'pageview' because union is currently set to " + getFieldDesc(getSetField()).name);
+    }
+  }
+
+  public void set_pageview(PageView value) {
+    if (value == null) throw new NullPointerException();
+    setField_ = _Fields.PAGEVIEW;
+    value_ = value;
+  }
+
   public boolean is_set_user_property() {
     return setField_ == _Fields.USER_PROPERTY;
   }
@@ -307,6 +363,11 @@ public class DataUnit extends org.apache.thrift.TUnion<DataUnit, DataUnit._Field
 
   public boolean is_set_friend() {
     return setField_ == _Fields.FRIEND;
+  }
+
+
+  public boolean is_set_pageview() {
+    return setField_ == _Fields.PAGEVIEW;
   }
 
 

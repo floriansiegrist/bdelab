@@ -9,76 +9,95 @@ import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
 import de.hska.iwi.bdelab.schema.Data;
+import de.hska.iwi.bdelab.schema.DataUnit;
+import de.hska.iwi.bdelab.schema.Page;
+import de.hska.iwi.bdelab.schema.PageView;
+import de.hska.iwi.bdelab.schema.Pedigree;
+import de.hska.iwi.bdelab.schema.UserID;
+
 import org.apache.hadoop.fs.FileSystem;
 
 public class Batchloader {
 
-    // ...
+	private void readPageviewsAsStream() {
+		try {
+			URI uri = Batchloader.class.getClassLoader().getResource("pageviews.txt").toURI();
+			try (Stream<String> stream = Files.lines(Paths.get(uri))) {
+				stream.forEach(line -> writeToPail(getDatafromString(line)));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} catch (URISyntaxException e1) {
+			e1.printStackTrace();
+		}
+	}
 
-    private void readPageviewsAsStream() {
-        try {
-            URI uri = Batchloader.class.getClassLoader().getResource("pageviews.txt").toURI();
-            try (Stream<String> stream = Files.lines(Paths.get(uri))) {
-                stream.forEach(line -> writeToPail(getDatafromString(line)));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
-        }
-    }
+	private Data getDatafromString(String pageview) {
+		Data result = null;
 
-    private Data getDatafromString(String pageview) {
-        Data result = null;
+		StringTokenizer tokenizer = new StringTokenizer(pageview);
+		String ip = tokenizer.nextToken();
+		String url = tokenizer.nextToken();
+		String time = tokenizer.nextToken();
 
-        StringTokenizer tokenizer = new StringTokenizer(pageview);
-        String ip = tokenizer.nextToken();
-        String url = tokenizer.nextToken();
-        String time = tokenizer.nextToken();
+		System.out.println(ip + " " + url + " " + time);
 
-        System.out.println(ip + " " + url + " " + time);
+		UserID uid = new UserID();
+		uid.set_user_id(ip);
 
-        // ... create Data
+		Page page = new Page();
+		page.set_url(url);
 
-        return result;
-    }
+		PageView pageView = new PageView(uid, page, 12345);
 
-    private void writeToPail(Data data) {
-        // ...
-    }
+		DataUnit dataUnit = new DataUnit();
+		dataUnit.set_pageview(pageView);
 
-    private void importPageviews() {
+		Pedigree pedigree = new Pedigree(Integer.parseInt(time));
 
-        // change this to "true" if you want to work
-        // on the local machines' file system instead of hdfs
-        boolean LOCAL = false;
+		result.set_dataunit(dataUnit);
+		result.set_pedigree(pedigree);
 
-        try {
-            // set up filesystem
-            FileSystem fs = FileUtils.getFs(LOCAL);
+		return result;
+	}
 
-            // prepare temporary pail folder
-            String newPath = FileUtils.prepareNewFactsPath(true, LOCAL);
+	private void writeToPail(Data data) {
+	}
 
-            // master pail goes to permanent fact store
-            String masterPath = FileUtils.prepareMasterFactsPath(false, LOCAL);
+	private void importPageviews() {
 
-            // set up new pail and a stream
-            // ...
+		// change this to "true" if you want to work
+		// on the local machines' file system instead of hdfs
+		boolean LOCAL = true;
 
-            // write facts to new pail
-            readPageviewsAsStream();
+		try {
+			// set up filesystem
+			FileSystem fs = FileUtils.getFs(LOCAL);
 
-            // set up master pail and absorb new pail
-            // ...
+			// prepare temporary pail folder
+			String newPath = FileUtils.prepareNewFactsPath(true, LOCAL);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+			// master pail goes to permanent fact store
+			String masterPath = FileUtils.prepareMasterFactsPath(false, LOCAL);
 
-    public static void main(String[] args) {
+			// set up new pail and a stream
+			// ...
+
+			// write facts to new pail
+			readPageviewsAsStream();
+
+			// set up master pail and absorb new pail
+			// ...
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
         Batchloader loader = new Batchloader();
-        loader.importPageviews();
-    }
+//        loader.importPageviews();
+        loader.getDatafromString(pageview)
+    	
+//    }
 }
