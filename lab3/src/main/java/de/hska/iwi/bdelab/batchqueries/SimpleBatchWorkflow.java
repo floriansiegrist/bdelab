@@ -52,9 +52,7 @@ public class SimpleBatchWorkflow extends QueryBase {
 
 		Api.execute(outTap, new Subquery("?raw").predicate(masterDataset, "_", "?raw")
 
-		///////////////////////////////////////////////////////////////
 		// HIER FEHLT DIE QUERY LOGIK !
-		///////////////////////////////////////////////////////////////
 
 		);
 	}

@@ -72,8 +72,6 @@ public class PageviewIndex {
 		public void map(Text key, BytesWritable value, OutputCollector<Text, IntWritable> output, Reporter reporter)
 				throws IOException {
 
-			System.out.println(deserialize(value.getBytes()));
-
 			Data data = deserialize(value.getBytes());
 			String url = data.get_dataunit().get_pageview().get_page().get_url();
 			long timestamp = data.get_pedigree().get_true_as_of_secs();

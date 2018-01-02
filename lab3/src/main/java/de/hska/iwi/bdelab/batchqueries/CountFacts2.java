@@ -29,7 +29,6 @@ public class CountFacts2 extends QueryBase {
 		// Query ausführen; Ergebnis wird an Stdout gesendet
 		Api.execute(new StdoutTap(), query);
 
-		///////////////////////////////////////////////////////////////
 		// Optional:
 		// Die Querry kann auch als Cascading Flow kompiliert werden
 		Flow flow = Api.compileFlow(new StdoutTap(), query);
@@ -39,7 +38,6 @@ public class CountFacts2 extends QueryBase {
 
 		// Alternative Möglichkeit, die Query auszuführen
 		// flow.complete();
-		///////////////////////////////////////////////////////////////
 	}
 
 	// Dies ist eine Java Anwendung

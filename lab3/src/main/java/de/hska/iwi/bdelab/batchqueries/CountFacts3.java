@@ -24,7 +24,7 @@ public class CountFacts3 extends QueryBase {
 				.predicate(new Count(), "?count");
 
         // prepare result path
-        String resultPath = FileUtils.prepareResultsPath("count-facts-3",true,false);
+        String resultPath = FileUtils.prepareResultsPath("count-facts-3", true, false);
 
 		// Query ausführen; Ergebnisse gehen als Textzeilen in HDFS File
 		Api.execute(Api.hfsTextline(resultPath), query);
