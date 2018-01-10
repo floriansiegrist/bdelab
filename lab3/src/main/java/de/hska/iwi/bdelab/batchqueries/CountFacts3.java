@@ -16,7 +16,7 @@ public class CountFacts3 extends QueryBase {
 		// Erzeuge Tap aus Master Pail
 		Tap masterDataset = dataTap(FileUtils.prepareMasterFactsPath(false,false));
 
-		// Die Query erzeugt nur einen ZÃ¤hlerwert
+		// Die Query erzeugt nur einen Zählerwert
 		query = new Subquery("?count")
 				// Master PailTap generiert Tupel nur mit Data Element
 				.predicate(masterDataset, "_", "?raw")
@@ -26,7 +26,7 @@ public class CountFacts3 extends QueryBase {
         // prepare result path
         String resultPath = FileUtils.prepareResultsPath("count-facts-3", true, false);
 
-		// Query ausfÃ¼hren; Ergebnisse gehen als Textzeilen in HDFS File
+		// Query ausführen; Ergebnisse gehen als Textzeilen in HDFS File
 		Api.execute(Api.hfsTextline(resultPath), query);
 	}
 
